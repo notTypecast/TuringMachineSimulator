@@ -1,0 +1,22 @@
+//TM for a^(i)b^(j), where 0 <= j <= i, given that input is a*b*
+q0
+qa
+qr
+
+t(q0,⊔)=(qa,NULL,R)
+t(q0,a)=(qfb,ȧ,R)
+t(q0,b)=(qr,NULL,R)
+t(q0,ḃ)=(qeq,NULL,R)
+
+t(qfb,a)=(qfb,NULL,R)
+t(qfb,ḃ)=(qfb,NULL,R)
+t(qfb,⊔)=(qa,NULL,R)
+t(qfb,b)=(qfa,ḃ,L)
+
+t(qfa,ḃ)=(qfa,NULL,L)
+t(qfa,a)=(qfa,NULL,L)
+t(qfa,ȧ)=(q0,NULL,R)
+
+t(qeq,ḃ)=(qeq,NULL,R)
+t(qeq,⊔)=(qa,NULL,R)
+t(qeq,b)=(qr,NULL,R)

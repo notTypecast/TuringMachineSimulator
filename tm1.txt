@@ -1,0 +1,10 @@
+// TM for a*b*
+q0
+qa
+qr
+t(q0,a)=(q0,NULL,R)
+t(q0,⊔)=(qa,NULL,R)
+t(q0,b)=(q1,NULL,R)
+t(q1,b)=(q1,NULL,R)
+t(q1,⊔)=(qa,NULL,R)
+t(q1,a)=(qr,NULL,R)

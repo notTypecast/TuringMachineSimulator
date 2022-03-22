@@ -1,0 +1,11 @@
+//Turing Machine to simulate infinite loop
+//When simulating this TM, any word that contains "ad" before any b or c,
+// or d as a first letter, will get stuck indefinitely
+q0
+qa
+qr
+
+t(q0,a)=(q0,NULL,R)
+t(q0,d)=(q0,NULL,L)
+t(q0,b)=(qa,NULL,R)
+t(q0,c)=(qr,NULL,R)
