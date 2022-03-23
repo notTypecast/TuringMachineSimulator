@@ -15,8 +15,9 @@ d is the character to be written
 R/L represents whether the head should be moved right or left
 """
 import re
+import argparse
 from string import ascii_letters, digits
-from sys import argv
+from time import sleep
 
 TRANSITION_REGEX = "t\(([a-zA-Z0-9]+),(.)\)=\(([a-zA-Z0-9]+),(.|NULL),(R|L)\)"
 STATE_CHARS = set(ascii_letters) | set(digits)
@@ -59,6 +60,10 @@ class TuringMachine:
 		def current(self):
 			return self.tape[self.head]
 
+		def print(self):
+			print("\r" + "".join(self.tape) + " "*10)
+			print("\r" + " "*self.head + "^" + " "*10, end="\033[A")
+
 
 	def __init__(self, M):
 		"""
@@ -84,17 +89,24 @@ class TuringMachine:
 
 			self.transitions[vals[0], vals[1]] = vals[2], vals[3], vals[4]
 
-	def run(self, w):
+	def run(self, w, graphics=False, delay=.5):
 		"""
 		Runs machine for input w
 		"""
 		tape = TuringMachine.Tape(w)
 
+		if graphics:
+			print()
+
 		while self.current_state != self.accept_state and self.current_state != self.reject_state:
+			if graphics:
+				tape.print()
+				sleep(delay)
+
 			try:
 				res = self.transitions[self.current_state, tape.current()]
 			except KeyError:
-				return False
+				break
 
 			self.current_state = res[0]
 			tape.write(res[1])
@@ -105,13 +117,21 @@ class TuringMachine:
 			else:
 				raise ValueError("Invalid head move instruction")
 
+		if graphics:
+			print()
 
 		return self.current_state == self.accept_state
 
+parser = argparse.ArgumentParser(description="Turing Machine Simulator")
+parser.add_argument("tm_file", type=str, help="Name or directory of file describing turing machine to simulate")
+parser.add_argument("word", type=str, nargs="?", default="", help="The input of the turing machine; empty string is used if argument is not passed")
+parser.add_argument("-g", action="store_true", help="Enables graphically showcasing the execution of the simulated turing machine")
+parser.add_argument("-d", type=float, default=.5, help="Delay between each step when graphically showcasing machine execution")
 
+args = parser.parse_args()
 
 # get TM
-with open(argv[1], "r") as f:
+with open(args.tm_file, "r") as f:
 	M = f.read().split("\n")
 	out = []
 	for line in M:
@@ -128,10 +148,5 @@ with open(argv[1], "r") as f:
 
 TM = TuringMachine(out)
 
-if len(argv) >= 3:
-	word = argv[2]
-else:
-	word = ""
-
-print(TM.run(word))
+print(TM.run(args.word, args.g, args.d))
 

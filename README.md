@@ -3,7 +3,7 @@
 An implementation of a turing machine simulator in Python.
 
 ### Execution
-The script simulating a turing machine for a given input should be run with two arguments: the name or directory of the file containing the turing machine description, as well as the word the turing machine should be run for.
+The script simulating a turing machine for a given input should be run with two arguments: the name or directory of the file containing the turing machine description, as well as the word the turing machine should be run for. Additional, optional arguments include -g (to enable graphical showcase of machine execution) and -d followed by a float (to set the delay between each step).
 
 ### Describing a turing machine
 A turing machine can be described in a text file, by following these rules:
