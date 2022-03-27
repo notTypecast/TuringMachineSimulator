@@ -19,7 +19,7 @@ import argparse
 from string import ascii_letters, digits
 from time import sleep
 
-TRANSITION_REGEX = "t\(([a-zA-Z0-9]+),(.)\)=\(([a-zA-Z0-9]+),(.|NULL),(R|L)\)"
+TRANSITION_REGEX = "t\(([a-zA-Z0-9]+),((?:.(?:\|.)*)|ANY)\)=\(([a-zA-Z0-9]+),(.|NULL),(R|L)\)"
 STATE_CHARS = set(ascii_letters) | set(digits)
 
 def valid_state(q):
@@ -87,7 +87,14 @@ class TuringMachine:
 			if not (valid_state(vals[0]) and valid_state(vals[2])):
 				raise ValueError("Invalid state")
 
-			self.transitions[vals[0], vals[1]] = vals[2], vals[3], vals[4]
+			if len(vals[1]) != 1 and vals[1] != "ANY":
+				chars = vals[1].split("|")
+
+				for char in chars:
+					self.transitions[vals[0], char] = vals[2], vals[3], vals[4]
+
+			else:
+				self.transitions[vals[0], vals[1]] = vals[2], vals[3], vals[4]
 
 	def run(self, w, graphics=False, delay=.5):
 		"""
@@ -104,7 +111,10 @@ class TuringMachine:
 				sleep(delay)
 
 			try:
-				res = self.transitions[self.current_state, tape.current()]
+				if (self.current_state, "ANY") in self.transitions:
+					res = self.transitions[self.current_state, "ANY"]
+				else:
+					res = self.transitions[self.current_state, tape.current()]
 			except KeyError:
 				break
 

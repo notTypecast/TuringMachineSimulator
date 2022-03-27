@@ -11,7 +11,7 @@ A turing machine can be described in a text file, by following these rules:
 * The first line should contain the name of the starting state.
 * The second line should contain the name of the accept state.
 * The third line should contain the name of the reject state.
-* Any of the following lines should contain values of the transition function. The given format for each line should be exactly `t(q,x)=(r,y,M)`, where `q` is the current state, `x` is the symbol being read, `r` is the next state, `y` is the symbol to write and `M` is either `R` or `L`, depending on whether the head of the tape should be moved right or left respectively. `y` can be given the special value `NULL`, if nothing should be written.
+* Any of the following lines should contain values of the transition function. The given format for each line should be exactly `t(q,x)=(r,y,M)`, where `q` is the current state, `x` is the symbol being read, `r` is the next state, `y` is the symbol to write and `M` is either `R` or `L`, depending on whether the head of the tape should be moved right or left respectively. `x` can be given the special value ANY, if the transition should work with any character. If this is done and there are other transitions with the same state and other characters, those will be ignored. Multiple characters can also be given in place of `x`, by separating them using the `|` character, i.e `a|b|c`. `y` can be given the special value `NULL`, if nothing should be written.
 * Any amount of lines can be left blank and will not be considered.
 * Comments can be created using the `//` syntax. Anything written after the `//` symbol will be ignored.
 

@@ -8,13 +8,11 @@ t(q0,a)=(qfb,ȧ,R)
 t(q0,b)=(qr,NULL,R)
 t(q0,ḃ)=(qeq,NULL,R)
 
-t(qfb,a)=(qfb,NULL,R)
-t(qfb,ḃ)=(qfb,NULL,R)
+t(qfb,a|ḃ)=(qfb,NULL,R)
 t(qfb,⊔)=(qa,NULL,R)
 t(qfb,b)=(qfa,ḃ,L)
 
-t(qfa,ḃ)=(qfa,NULL,L)
-t(qfa,a)=(qfa,NULL,L)
+t(qfa,a|ḃ)=(qfa,NULL,L)
 t(qfa,ȧ)=(q0,NULL,R)
 
 t(qeq,ḃ)=(qeq,NULL,R)
